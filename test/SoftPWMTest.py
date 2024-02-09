@@ -10,6 +10,8 @@ Description:
 
 import RPi.GPIO as GPIO
 import time
+import sys
+sys.path.append('/home/kwiat-test/Desktop/CUPSD/src/')
 from SoftPWM import SoftwarePWM
 
 pin40 = SoftwarePWM(40, 50)
