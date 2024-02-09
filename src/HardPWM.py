@@ -24,11 +24,11 @@ class HardwarePWM:
 
     def setup(self):
         self.pinpwm = pigpio.pi()
-        self.pinpwm.set_PWM_frequnecy(self.gpiopin, self.freq)
+        self.pinpwm.set_PWM_frequency(self.gpiopin, self.freq)
         self.pinpwm.set_PWM_dutycycle(self.gpiopin, 0)
 
     def end(self):
-        self.pinpwm.set_PWM_frequnecy(self.gpiopin, 0)
+        self.pinpwm.set_PWM_frequency(self.gpiopin, 0)
         self.pinpwm.stop()
 
 # Test
