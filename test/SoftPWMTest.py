@@ -10,7 +10,7 @@ Description:
 
 import RPi.GPIO as GPIO
 import time
-from SoftwarePWM.SoftPWM import SoftwarePWM
+from SoftPWM import SoftwarePWM
 
 pin40 = SoftwarePWM(40, 50)
 
