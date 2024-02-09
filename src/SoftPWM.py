@@ -5,7 +5,7 @@ February 8, 2024
 Description:
     This file contains the class for our software PWM control using a raspberry pi
     Example use:
-        from SoftwarePWM.SoftPWM import SoftwarePWM
+        from ... import SoftwarePWM (include your relative path in ...)
         pin40 = SoftwarePWM(40, 50)
 '''
 
