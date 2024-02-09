@@ -1,3 +1,13 @@
+'''
+Troy Husted
+February 1, 2024
+----------------
+Description:
+    This file contains the class for our analog read using an analog to digital converter (ADC)
+    Example use:
+    
+'''
+
 from time import sleep
 from spidev import SpiDev
  
