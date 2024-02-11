@@ -28,4 +28,5 @@ class HardwarePWM:
         self.pinpwm.hardware_PWM(self.gpiopin, self.freq, 0) #Pin, freq, duty cycle
 
     def end(self):
+        self.pinpwm.hardware_PWM(self.gpiopin, 0, 0*10000) #Pin, freq, duty cycle
         self.pinpwm.stop()
