@@ -24,26 +24,8 @@ class HardwarePWM:
 
     def setup(self):
         self.pinpwm = pigpio.pi()
+        self.pinpwm.set_mode(self.gpiopin, pigpio.OUTPUT)
         self.pinpwm.hardware_PWM(self.gpiopin, self.freq, 0) #Pin, freq, duty cycle
 
     def end(self):
-        self.pinpwm.hardware_PWM(self.gpiopin, 0, 0) #Pin, freq, duty cycle
         self.pinpwm.stop()
-
-# Test
-pinNum = 18
-freqHz = 50
-pin = HardwarePWM(pinNum, freqHz)
-
-try:
-    while True:
-        for dc in range(0,100,1):
-            pin.pinpwm.hardware_PWM(pinNum, freqHz, dc*10000) #Pin, freq, duty cycle
-            print(dc)
-            time.sleep(0.1)
-        for dc in range(100,0,-1):
-            pin.pinpwm.hardware_PWM(pinNum, freqHz, dc*10000) #Pin, freq, duty cycle
-            print(dc)
-            time.sleep(0.1)
-except KeyboardInterrupt:
-      pin.end()
