@@ -3,7 +3,7 @@ Troy Husted
 February 8, 2024
 ----------------
 Description:
-    This file tests the PWM output by looping through duty cycles
+    This file tests the PWM output by sweeping through duty cycles
     0 --> 100
     100 --> 0
 '''

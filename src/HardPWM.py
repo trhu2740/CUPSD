@@ -4,8 +4,16 @@ February 9, 2024
 ----------------
 Description:
     This file contains the class for our hardware PWM control using a raspberry pi
+    Note: There are only two channels for hardware PWM on the Raspberry Pi. Be aware that
+        each channel is associated with two pins.
+
+        Channel 0: GPIO18, GPIO12
+        Channel 1: GPIO13, GPIO19
+
     Example use:
         from ... import SoftwarePWM (include your relative path in ...)
+        pin = HardwarePWM(pinNum, freqHz)
+        pin.pinpwm.hardware_PWM(pinNum, freqHz, dc*10000) #Pin, freq, duty cycle
         
 '''
 import pigpio
