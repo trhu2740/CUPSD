@@ -16,16 +16,16 @@ Description:
 
 import RPi.GPIO as GPIO
 
-A_pin = 21
-B_pin = 20
+A_pin = 26
+B_pin = 6
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(A_pin, GPIO.IN)
 GPIO.setup(B_pin, GPIO.IN)
 
 # 1 rev = 3600
-
-outcome = [0,-1,1,0,-1,0,0,1,1,0,0,-1,0,-1,1,0]
+outcome=[0,1,-1,0,-1,0,0,1,1,0,0,-1,0,-1,1,0]
+#outcome = [0,-1,1,0,-1,0,0,1,1,0,0,-1,0,-1,1,0]
 last_AB = 0b00
 counter = 0
 
