@@ -1,0 +1,7 @@
+# This is used to only push neccecarry code to git and ignore any local development files
+
+# * indicates all files with the following extension are ignored
+*.DS_Store
+
+# All directories that need to be ignored
+/temp

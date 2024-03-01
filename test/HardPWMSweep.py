@@ -7,6 +7,7 @@ Description:
     0 --> 100
     100 --> 0
 '''
+
 import pigpio
 import time
 import sys
