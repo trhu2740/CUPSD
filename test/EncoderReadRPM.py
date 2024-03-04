@@ -1,3 +1,19 @@
+'''
+Troy Husted
+March 4, 2024
+----------------
+Description:
+    This file contains code to read the encoder RPM. This is calculated based on a change of encoder
+    position over time. A constant - "MOVEMENT_THRESHOLD" is in place to control the precision of the 
+    encoder RPM readout. This can be adjusted. You will only see different values when the encoder is moving.
+
+    Any GPIO input pins can be used for the encoder.
+
+    Example use:
+    python3 EncoderReadRPM.py
+        
+'''
+
 import RPi.GPIO as GPIO
 import time
 
@@ -30,7 +46,6 @@ while True:
     # Calculate time difference
     current_time = time.time()
     time_diff = current_time - last_time
-    #last_time = current_time
 
     # Calculate RPM only when movement is significant
     counterDiff = counter - prev_counter

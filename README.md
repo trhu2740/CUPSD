@@ -1,2 +1,96 @@
 # CUPSD
+
 Code for the Senior Design Team 4 partnering with CU Physics. Automated insulation wrapping machine.
+
+# Raspberry Pi Setup
+
+For your initial setup of your raspberry pi, plug it in and connect a USB keyboard/mouse. Connect the raspberry pi to your local WI-FI or ad-hoc network that you will use to control the Pi. Once connected, you will no longer need a monitor, keyboard, or mouse for the Pi.
+
+Once the Pi is connected to your local network, you can SSH into your Pi to control it from your computer. The following terminal commands can be used on your Mac:
+
+```
+cd /Applications/Utilities/
+ssh kwiat-test:@raspberrypi.local
+(you will be prompted to enter your password here)
+```
+
+For windows, you can use any SSH client (such as PuTTy, or the terminal).
+
+# Installation
+
+The CUPSD source code is designed to work only on a Raspberry Pi (model 3B+). This source code will not compile on Arduino.
+
+Clone the directory to your designated folder using one of the following (Https, SSH, CLI). Please refer to git documentation for any troubles cloning the repository:
+
+```
+git clone https://github.com/trhu2740/CUPSD.git
+git clone git@github.com:trhu2740/CUPSD.git
+gh repo clone trhu2740/CUPSD
+```
+
+Trying to run any source code immediately after setting up your Pi may not work. To ensure your Pi is setup correctly, please use the following steps from your Pi terminal:
+
+```
+sudo apt update
+sudo apt full-upgrade
+sudo raspi-config
+(When the menu opens, navigate to "Interfacing Options" and enable SPi)
+```
+
+The source code may use python libraries that don't come natively installed on your Raspberry Pi. Using the traditional "pip install [library]" may throw errors. The most common error I have seen is:
+
+```
+error: externally-managed-environment
+```
+
+To get around this, I reccommend using the following command to install any additional packages, where xyz is your desired package. Note the 'sudo' command at the beginning:
+
+```
+sudo apt install python3-xyz
+```
+
+The most important package to install is pigpio (pronounced Pi-GPIO). This library manages all of our hardware PWM channels to control the drivetrain motor and linear actuator. To install this package, use the above command but replace xyz with pigpio.
+
+```
+sudo apt install python3-pigpio
+```
+
+# Setup Tips
+
+Prior to running any code, ensure you are able to actually output PWM signals from the raspberry pi. To start pigpio, you need to start a daemon. To start a daemon:
+
+```
+sudo pigpiod
+```
+
+After executing this command, a daemon should be started and PWM signals should work when you begin running code. Note, you will have to restart a daemon whenever the Pi is power cycled or shut off.
+
+To see the status of the Pi's GPIO pins, execute the following command:
+
+```
+raspi-gpio get
+```
+
+Each GPIO can be configured to one of eight different modes. The modes are: Input, Output, ALT0, ALT1, ALT2, ALT3, ALT4, and ALT5. You may not ever have to set the mode of a GPIO pin - however, if you are experiencing unexpected behavior from a GPIO pin, check the mode as a last resort. Example to change the pin mode:
+
+```
+pigs m 4 r # Input (read)
+pigs m 4 w # Output (write)
+pigs m 4 0 # ALT 0
+pigs m 4 5 # ALT 5
+```
+
+Editing files from the terminal can be done in primarily one of two ways, and it comes down to your preference. To edit a file, you can use nano or vim. Nano and vim keyboard shortcuts can be found online. Examples to edit a file:
+
+```
+nano yourfile.py
+vi yourfile.py
+```
+
+To shutdown the Pi safely, halt the system:
+
+```
+sudo halt
+```
+
+Wait for the green LED on the Pi to stop blinking. After which, you can safely disconnect the power without any possible memory corruption.

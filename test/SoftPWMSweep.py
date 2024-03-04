@@ -6,6 +6,9 @@ Description:
     This file tests the PWM output by sweeping through duty cycles
     0 --> 100
     100 --> 0
+
+    Example use:
+    python3 SoftPWMSweep.py
 '''
 
 import RPi.GPIO as GPIO

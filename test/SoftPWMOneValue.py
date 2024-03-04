@@ -8,6 +8,9 @@ Description:
     You will notice that the dc is inverse to the actual duty cycle that will
     be read on the oscilloscope.
 
+    Example use:
+    python3 SoftPWMOneValue.py
+
 '''
 
 

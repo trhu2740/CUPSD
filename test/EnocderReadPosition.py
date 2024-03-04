@@ -5,13 +5,12 @@ February 9, 2024
 Description:
     This file contains code to read the encoder position. A positive number indicates clockwise
     rotation, while a negative number indicates counterclockwise rotation. Note, this reads absolute
-    position from the start position.
+    position from the start position. You will only see different values when the encoder is moving.
 
-        Channel 0: GPIO18, GPIO12
-        Channel 1: GPIO13, GPIO19
+    Any GPIO input pins can be used for the encoder.
 
     Example use:
-        
+    python3 EncoderReadPosition.py
 '''
 
 import RPi.GPIO as GPIO

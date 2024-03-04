@@ -4,6 +4,9 @@ February 8, 2024
 ----------------
 Description:
     This file stops hardware PWM on all channels (channel 0 & channel 1)
+
+    Example use:
+    python3 StopHardPWMAll.py
 '''
 
 
