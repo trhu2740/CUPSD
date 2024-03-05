@@ -3,24 +3,23 @@ Troy Husted
 February 18, 2024
 ----------------
 Description:
-    This file contains the class for moving the position of the T16-P Linear Actuator
+    This file contains the class for moving the position of the T16-P Linear Actuator.
+    The use is almost exactly the same as the hardware PWM class since the linear actuator
+    relies on the hardware PWM to extend & retract.
+
     Example use:
-    
+        from ... import LinearActuate (include your relative path in ...)
+        actuator = LinearActuate(pinNum, freqHz)
+
 '''
 import pigpio
 
 class LinearActuate:
     '''
     This class controls the movement of the linear actuator. With the accompanying LAC (Linear Actuator Controller)
-    board, we can use the linear actuator as if it were a servo. 
-        Note: We use the pigpio library for servo pulsewidth
-            pulsewidth = 0 (off)
-            pulsewidth = 1000 (safe anti-clockwise)
-            pulsewidth = 1500 (center)
-            pulsewidth = 2000 (safe clockwise)
+    board, we use PWM to control the position. The LAC board requires a 3.3V, 1kHz PWM signal. A duty cycle of 0%
+    corresponds to fully retracted, and a duty cycle of 100% corresponds to fully extended.
 
-            The selected pulsewidth will continue to be transmitted until changed by a subsequent call to 
-            set_servo_pulsewidth.
     @param pin: Enter the (gpio) pin number on the raspberry pi
     '''
 
@@ -30,8 +29,12 @@ class LinearActuate:
 
     def setup(self):
         self.pinpwm = pigpio.pi()
-        self.pinpwm.set_servo_pulsewidth(self.pin, 0) #(pin, pulsewidth)
+        self.pinpwm.set_mode(self.gpiopin, pigpio.OUTPUT)
+        self.pinpwm.hardware_PWM(self.gpiopin, 0, 0) #Pin, freq, duty cycle
+
+    def changePosition(self, dc):
+        self.pinpwm.hardware_PWM(self.gpiopin, 1000, dc) #Pin, freq, duty cycle
 
     def end(self):
-        self.pinpwm.set_servo_pulsewidth(self.pin, 0)
+        self.pinpwm.hardware_PWM(self.gpiopin, 0, 0) #Pin, freq, duty cycle
         self.pinpwm.stop()

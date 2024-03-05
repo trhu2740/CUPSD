@@ -24,7 +24,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(A_pin, GPIO.IN)
 GPIO.setup(B_pin, GPIO.IN)
 
-# 1 rev = 3600
+# 1 rev = 7200
 outcome = [0, 1, -1, 0, -1, 0, 0, 1, 1, 0, 0, -1, 0, -1, 1, 0]
 
 last_AB = 0b00
@@ -50,8 +50,8 @@ while True:
     # Calculate RPM only when movement is significant
     counterDiff = counter - prev_counter
     if abs(counterDiff) > MOVEMENT_THRESHOLD and time_diff != 0:
-        rpm = (counterDiff / 3600) * (60 / time_diff)
-        print("RPM:", rpm)
+        rpm = (counterDiff / 7200) * (60 / time_diff)
+        print("RPM:", abs(rpm))
         prev_counter = counter
         last_time = current_time
     #else:
