@@ -94,3 +94,9 @@ sudo halt
 ```
 
 Wait for the green LED on the Pi to stop blinking. After which, you can safely disconnect the power without any possible memory corruption.
+
+To remotely copy files from the pi to your machine (example):
+
+```
+scp kwiat-test@127.0.0.1:/home/kwiat-test/Desktop/fisherman.jpg /Users/troyhusted/Desktop/
+```

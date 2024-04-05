@@ -24,7 +24,7 @@ class LinearActuate:
     '''
 
     def __init__(self, pin):
-        self.pin = pin
+        self.gpiopin = pin
         self.setup()
 
     def setup(self):
@@ -33,7 +33,7 @@ class LinearActuate:
         self.pinpwm.hardware_PWM(self.gpiopin, 0, 0) #Pin, freq, duty cycle
 
     def changePosition(self, dc):
-        self.pinpwm.hardware_PWM(self.gpiopin, 1000, dc) #Pin, freq, duty cycle
+        self.pinpwm.hardware_PWM(self.gpiopin, 1000, dc*10000) #Pin, freq, duty cycle
 
     def end(self):
         self.pinpwm.hardware_PWM(self.gpiopin, 0, 0) #Pin, freq, duty cycle
