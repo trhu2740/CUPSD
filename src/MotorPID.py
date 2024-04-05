@@ -49,8 +49,8 @@ if __name__ == "__main__":
     MOVEMENT_THRESHOLD = 5  # Adjust this value as needed
     TO_14_MM_SHAFT_CONVERSION = 3.4652 # Comes from ratio of circumfrence
 
-    A_pin = 26 #GPIO Pin Number
-    B_pin = 6 #GPIO Pin Number
+    A_pin = 14 #GPIO Pin Number
+    B_pin = 15 #GPIO Pin Number
 
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(A_pin, GPIO.IN)
@@ -121,8 +121,9 @@ if __name__ == "__main__":
             motor.pinpwm.hardware_PWM(MOTOR_GPIO_PIN, MOTOR_FREQUENCY_HZ, current_DC*10000) #Pin, freq, duty cycle
 
             rpm_values.append(current_rpm)  # Collect RPM value
-            
+
     except KeyboardInterrupt:
+        print("interrupt")
         # Plot RPM values
         plt.plot(range(len(rpm_values)), rpm_values, label='RPM')
         plt.xlabel('Timestep')
