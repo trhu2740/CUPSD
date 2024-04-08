@@ -1,4 +1,4 @@
-'''
+"""
 Troy Husted
 February 10, 2024
 ----------------
@@ -11,23 +11,21 @@ Description:
     Example use:
     python3 SoftPWMOneValue.py
 
-'''
-
+"""
 
 import RPi.GPIO as GPIO
 import time
 import sys
-sys.path.append('/home/kwiat-test/Desktop/CUPSD/src/')
+
+sys.path.append("/home/kwiat-test/Desktop/CUPSD/src/")
 from SoftPWM import SoftwarePWM
 
 pin40 = SoftwarePWM(40, 100)
 
-dc = 10 #inverse : dc of 10 corresponds to an actual duty cycle of 90% on the scope
+dc = 10  # inverse : dc of 10 corresponds to an actual duty cycle of 90% on the scope
 
 try:
     while True:
         pin40.pinpwm.ChangeDutyCycle(dc)
 except KeyboardInterrupt:
     pin40.end()
-
-

@@ -1,4 +1,4 @@
-'''
+"""
 Troy Husted
 February 9, 2024
 ----------------
@@ -15,16 +15,18 @@ Description:
         pin = HardwarePWM(pinNum, freqHz)
         pin.pinpwm.hardware_PWM(pinNum, freqHz, dc*10000) #Pin, freq, duty cycle
         
-'''
+"""
+
 import pigpio
 import time
 
+
 class HardwarePWM:
-    '''
+    """
     This class controls hardware PWM
     @param pin: Enter the (gpio) pin number on the raspberry pi
     @param freq: Enter the frequency in hz for the PWM signal
-    '''
+    """
 
     def __init__(self, gpiopin, freq):
         self.gpiopin, self.freq = gpiopin, freq
@@ -33,8 +35,8 @@ class HardwarePWM:
     def setup(self):
         self.pinpwm = pigpio.pi()
         self.pinpwm.set_mode(self.gpiopin, pigpio.OUTPUT)
-        self.pinpwm.hardware_PWM(self.gpiopin, self.freq, 0) #Pin, freq, duty cycle
+        self.pinpwm.hardware_PWM(self.gpiopin, self.freq, 0)  # Pin, freq, duty cycle
 
     def end(self):
-        self.pinpwm.hardware_PWM(self.gpiopin, 0, 0*10000) #Pin, freq, duty cycle
+        self.pinpwm.hardware_PWM(self.gpiopin, 0, 0 * 10000)  # Pin, freq, duty cycle
         self.pinpwm.stop()

@@ -9,12 +9,13 @@ import matplotlib.pyplot as plt
     (kd) Derivative Term: Helps predict future behavior of error based on currect rate of change
 """
 
+
 class PIDController:
     def __init__(self, setpoint, kp=1.0, ki=0.0, kd=0.0):
         self.setpoint = setpoint
-        self.kp = kp # Proportional term
-        self.ki = ki # Integral term
-        self.kd = kd # Derivative term
+        self.kp = kp  # Proportional term
+        self.ki = ki  # Integral term
+        self.kd = kd  # Derivative term
         self.prev_error = 0
         self.integral = 0
 
@@ -27,6 +28,7 @@ class PIDController:
 
         self.prev_error = error
         return output
+
 
 if __name__ == "__main__":
     setpoint_rpm = 60
@@ -56,10 +58,10 @@ if __name__ == "__main__":
         rpm_values.append(current_rpm)  # Collect RPM value
 
     # Plot RPM values
-    plt.plot(range(len(rpm_values)), rpm_values, label='RPM')
-    plt.xlabel('Timestep')
-    plt.ylabel('RPM')
-    plt.title('Motor RPM Over Time')
+    plt.plot(range(len(rpm_values)), rpm_values, label="RPM")
+    plt.xlabel("Timestep")
+    plt.ylabel("RPM")
+    plt.title("Motor RPM Over Time")
     plt.legend()
     plt.grid(True)
     plt.show()

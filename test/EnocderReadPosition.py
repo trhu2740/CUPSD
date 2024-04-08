@@ -1,4 +1,4 @@
-'''
+"""
 Troy Husted
 February 9, 2024
 ----------------
@@ -11,12 +11,12 @@ Description:
 
     Example use:
     python3 EncoderReadPosition.py
-'''
+"""
 
 import RPi.GPIO as GPIO
 
-A_pin = 26 #GPIO pin number
-B_pin = 6 #GPIO pin number
+A_pin = 26  # GPIO pin number
+B_pin = 6  # GPIO pin number
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(A_pin, GPIO.IN)
@@ -57,7 +57,7 @@ Previous A | Previous B | Current A | Current B | Result
     1           1           1           1       |     0 (do nothing)
     
 """
-outcome=[0,1,-1,0,-1,0,0,1,1,0,0,-1,0,-1,1,0]
+outcome = [0, 1, -1, 0, -1, 0, 0, 1, 1, 0, 0, -1, 0, -1, 1, 0]
 last_AB = 0b00
 counter = 0
 
@@ -81,10 +81,10 @@ while True:
             111 (binary) -> 7 (base 10)
 
             so, we lookup the outcome[7] = 1 (increase counter by 1)
-    """    
-    
+    """
+
     current_AB = (A << 1) | B
-    position  = (last_AB << 2) | current_AB
+    position = (last_AB << 2) | current_AB
     counter += outcome[position]
     last_AB = current_AB
     print(counter)

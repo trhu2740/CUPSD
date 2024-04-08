@@ -1,4 +1,4 @@
-'''
+"""
 Troy Husted
 March 4, 2024
 ----------------
@@ -12,7 +12,7 @@ Description:
     Example use:
     python3 EncoderReadRPM.py
         
-'''
+"""
 
 import RPi.GPIO as GPIO
 import time
@@ -20,10 +20,10 @@ import time
 # Set a threshold for movement detection
 ENCODER_COUNT = 7600
 MOVEMENT_THRESHOLD = 5  # Adjust this value as needed
-TO_14_MM_SHAFT_CONVERSION = 3.4652 # Comes from ratio of circumfrence
+TO_14_MM_SHAFT_CONVERSION = 3.4652  # Comes from ratio of circumfrence
 
-A_pin = 14 #GPIO Pin Number
-B_pin = 15 #GPIO Pin Number
+A_pin = 14  # GPIO Pin Number
+B_pin = 15  # GPIO Pin Number
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(A_pin, GPIO.IN)
@@ -65,7 +65,24 @@ Previous A | Previous B | Current A | Current B | Result
 
 """
 
-outcome = [0, 1, -1, 0, -1, 0, 0, 1, 1, 0, 0, -1, 0, -1, 1, 0] # Result values from above
+outcome = [
+    0,
+    1,
+    -1,
+    0,
+    -1,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    -1,
+    0,
+    -1,
+    1,
+    0,
+]  # Result values from above
 
 last_AB = 0b00
 counter = 0
@@ -73,8 +90,8 @@ prev_counter = 0
 last_time = time.time()  # Store the initial time
 
 while True:
-    A = GPIO.input(A_pin) # Encoder channel A
-    B = GPIO.input(B_pin) # Encoder channel B
+    A = GPIO.input(A_pin)  # Encoder channel A
+    B = GPIO.input(B_pin)  # Encoder channel B
 
     """
         The goal here is to create a 4 bit number. We get the previous state, shift over two bits,
@@ -92,9 +109,9 @@ while True:
             111 (binary) -> 7 (base 10)
 
             so, we lookup the outcome[7] = 1 (increase counter by 1)
-    """    
-    
-    current_AB = (A << 1) | B 
+    """
+
+    current_AB = (A << 1) | B
     position = (last_AB << 2) | current_AB
     counter += outcome[position]
     last_AB = current_AB
@@ -107,8 +124,8 @@ while True:
     counterDiff = counter - prev_counter
     if abs(counterDiff) > MOVEMENT_THRESHOLD and time_diff != 0:
         rpm = (counterDiff / ENCODER_COUNT) * (60 / time_diff)
-        print("RPM: ", round(abs(rpm)*TO_14_MM_SHAFT_CONVERSION, 2))
+        print("RPM: ", round(abs(rpm) * TO_14_MM_SHAFT_CONVERSION, 2))
         prev_counter = counter
         last_time = current_time
-    #else:
-     #   print("RPM: N/A (No significant movement)")
+    # else:
+    #   print("RPM: N/A (No significant movement)")

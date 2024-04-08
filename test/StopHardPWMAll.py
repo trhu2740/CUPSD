@@ -1,4 +1,4 @@
-'''
+"""
 Troy Husted
 February 8, 2024
 ----------------
@@ -7,13 +7,13 @@ Description:
 
     Example use:
     python3 StopHardPWMAll.py
-'''
-
+"""
 
 import pigpio
 import time
 import sys
-sys.path.append('/home/kwiat-test/Desktop/CUPSD/src/')
+
+sys.path.append("/home/kwiat-test/Desktop/CUPSD/src/")
 from HardPWM import HardwarePWM
 
 # Stop PWM All Channels
