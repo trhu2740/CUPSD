@@ -34,9 +34,9 @@ if __name__ == "__main__":
     setpoint_rpm = 60
 
     # PID constants
-    kp = 0.1
+    kp = 0.2
     ki = 0.01
-    kd = 0.05
+    kd = 0.1
 
     # Create controller
     pid = PIDController(setpoint_rpm, kp, ki, kd)
@@ -52,8 +52,9 @@ if __name__ == "__main__":
         control_signal = pid.update(current_rpm)
 
         # Simulate motor response to control signal (adjust RPM)
+        print("Control signal from PID update: ", control_signal)
         current_rpm += control_signal
-        print(control_signal)
+        print("current rpm: ", current_rpm)
 
         rpm_values.append(current_rpm)  # Collect RPM value
 

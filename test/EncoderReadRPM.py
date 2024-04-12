@@ -20,10 +20,10 @@ import time
 # Set a threshold for movement detection
 ENCODER_COUNT = 7600
 MOVEMENT_THRESHOLD = 5  # Adjust this value as needed
-TO_14_MM_SHAFT_CONVERSION = 3.4652  # Comes from ratio of circumfrence
+ENCODER_TO_SHAFT_CONVERSION = 3.4652  # Comes from ratio of circumfrence, 5.5/5.9?
 
-A_pin = 14  # GPIO Pin Number
-B_pin = 15  # GPIO Pin Number
+A_pin = 2  # GPIO Pin Number
+B_pin = 3  # GPIO Pin Number
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(A_pin, GPIO.IN)
@@ -124,7 +124,7 @@ while True:
     counterDiff = counter - prev_counter
     if abs(counterDiff) > MOVEMENT_THRESHOLD and time_diff != 0:
         rpm = (counterDiff / ENCODER_COUNT) * (60 / time_diff)
-        print("RPM: ", round(abs(rpm) * TO_14_MM_SHAFT_CONVERSION, 2))
+        print("RPM: ", round(abs(rpm) * ENCODER_TO_SHAFT_CONVERSION, 2))
         prev_counter = counter
         last_time = current_time
     # else:
