@@ -15,8 +15,8 @@ Description:
 
 import RPi.GPIO as GPIO
 
-A_pin = 26  # GPIO pin number
-B_pin = 6  # GPIO pin number
+A_pin = 2  # GPIO pin number
+B_pin = 3  # GPIO pin number
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(A_pin, GPIO.IN)

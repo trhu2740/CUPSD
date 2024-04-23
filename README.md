@@ -95,8 +95,20 @@ sudo halt
 
 Wait for the green LED on the Pi to stop blinking. After which, you can safely disconnect the power without any possible memory corruption.
 
-To remotely copy files from the pi to your machine (example):
+To remotely copy files from the pi to your machine, use the scp command (note: IP address may change):
 
 ```
-scp kwiat-test@127.0.0.1:/home/kwiat-test/Desktop/fisherman.jpg /Users/troyhusted/Desktop/
+scp kwiat-test@10.201.5.94:/home/kwiat-test/Desktop/fisherman.jpg /Users/troyhusted/Desktop/
 ```
+
+To get the IP address of the PI, ssh with local and use the following command:
+
+```
+hostname -I
+```
+
+Note, you can reserve an IP for the raspberry pi in your router or request the DHCP to reserve one. Otherwise, it is not gauranteed that the Pi will have the same IP address whenever it reboots.
+
+change
+
+change

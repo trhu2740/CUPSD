@@ -8,13 +8,13 @@ Description:
     from ... import MCP3008_AnalogRead (include your relative path in ...)
 """
 
-from time import sleep
 from spidev import SpiDev
 
 
 class MCP3008_AnalogRead:
     """
-    This class reads analog values from the analog to digital converter
+    This class reads analog values from the analog to digital converter. Specify a bus or device
+    when initializing if using anything other than zero.
     """
 
     def __init__(self, bus=0, device=0):
@@ -34,9 +34,3 @@ class MCP3008_AnalogRead:
 
     def close(self):
         self.spi.close()
-
-
-# adc = MCP3008_AnalogRead()
-# while True:
-#         print( adc.read( channel = 0 ) ) # if necessary perform several times
-#         #sleep(0.1)

@@ -1,4 +1,15 @@
+"""
+Troy Husted
+April 23, 2024
+----------------
+Description:
+    
+
+    Example use:
+"""
+
 import matplotlib.pyplot as plt
+import csv
 
 """
     (kp) Proportional Term: Directily proportional to the current error.
@@ -34,9 +45,9 @@ if __name__ == "__main__":
     setpoint_rpm = 60
 
     # PID constants
-    kp = 0.2
-    ki = 0.01
-    kd = 0.1
+    kp = 0.3
+    ki = 0.00
+    kd = 0.00
 
     # Create controller
     pid = PIDController(setpoint_rpm, kp, ki, kd)
@@ -54,15 +65,21 @@ if __name__ == "__main__":
         # Simulate motor response to control signal (adjust RPM)
         print("Control signal from PID update: ", control_signal)
         current_rpm += control_signal
-        print("current rpm: ", current_rpm)
+        print("current rpm: ", round(current_rpm * 10000, 0))
 
         rpm_values.append(current_rpm)  # Collect RPM value
 
     # Plot RPM values
-    plt.plot(range(len(rpm_values)), rpm_values, label="RPM")
-    plt.xlabel("Timestep")
-    plt.ylabel("RPM")
-    plt.title("Motor RPM Over Time")
-    plt.legend()
-    plt.grid(True)
-    plt.show()
+    # plt.plot(range(len(rpm_values)), rpm_values, label="RPM")
+    # plt.xlabel("Timestep")
+    # plt.ylabel("RPM")
+    # plt.title("Motor RPM Over Time")
+    # plt.legend()
+    # plt.grid(True)
+    # plt.show()
+    file_name = "rpm_values.csv"
+    with open(file_name, mode="w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(["RPM"])
+        for rpm in rpm_values:
+            writer.writerow([rpm])

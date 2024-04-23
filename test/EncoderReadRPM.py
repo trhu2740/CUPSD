@@ -20,7 +20,7 @@ import time
 # Set a threshold for movement detection
 ENCODER_COUNT = 7600
 MOVEMENT_THRESHOLD = 5  # Adjust this value as needed
-ENCODER_TO_SHAFT_CONVERSION = 3.4652  # Comes from ratio of circumfrence, 5.5/5.9?
+ENCODER_TO_SHAFT_CONVERSION = 1.0186  # Comes from ratio of circumfrence
 
 A_pin = 2  # GPIO Pin Number
 B_pin = 3  # GPIO Pin Number

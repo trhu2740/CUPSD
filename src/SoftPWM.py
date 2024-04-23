@@ -21,7 +21,7 @@ import RPi.GPIO as GPIO
 class SoftwarePWM:
     """
     This class controls software PWM
-    @param pin: Enter the pin number on the raspberry pi
+    @param pin: Enter the pin number (NOT GPIO) on the raspberry pi
     @param freq: Enter the frequency in hz for the PWM signal
     """
 

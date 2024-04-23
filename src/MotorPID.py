@@ -1,64 +1,30 @@
-import matplotlib.pyplot as plt
+"""
+Troy Husted
+April 23, 2024
+----------------
+Description:
+    
+
+    Example use:
+"""
+
 import RPi.GPIO as GPIO
 import pigpio
 import time
-import sys
-
-sys.path.append("/home/kwiat-test/Desktop/CUPSD/src/")
+import csv
 from HardPWM import HardwarePWM
-
-"""
-    (kp) Proportional Term: Directily proportional to the current error.
-        a higher value will lead to higher overshoot and more oscillation
-    (ki) Integral Term: Helps eliminate steady-state error, which can persist
-        even after the system has stabalized. Ki is multiplied by the cumulative sum
-        of all past errors, so it grows over time.
-    (kd) Derivative Term: Helps predict future behavior of error based on currect rate of change
-"""
+from MotorPIDClass import PIDController
 
 
-class PIDController:
-    def __init__(self, setpoint_RPM, kp=1.0, ki=0.0, kd=0.0):
-        self.setpoint_RPM = setpoint_RPM
-        self.kp = kp  # Proportional term
-        self.ki = ki  # Integral term
-        self.kd = kd  # Derivative term
-        self.prev_error = 0
-        self.integral = 0
-
-    def update(self, measured_RPM, current_duty_cycle):
-        error = self.setpoint_RPM - measured_RPM
-        self.integral += error
-        derivative = error - self.prev_error
-
-        """
-        Normalize error and derivative based on setpoint range. Prevents
-        larger RPM values from dominating the update compared to lower RPM values
-        """
-        normalized_error = error / self.setpoint_RPM
-        normalized_derivative = derivative / self.setpoint_RPM
-
-        output = (
-            (self.kp * normalized_error)
-            + (self.ki * self.integral)
-            + (self.kd * normalized_derivative)
-        )
-
-        # Duty cycle is in the range of 0 to 100 (percentage)
-        new_duty_cycle = current_duty_cycle + output
-
-        # Ensure the duty cycle remains within the valid range (0 to 100)
-        new_duty_cycle = max(0, min(100, new_duty_cycle))
-
-        self.prev_error = error
-        return new_duty_cycle
-
-
-if __name__ == "__main__":
-    # Setup Motor
+def mainMotorLoop(
+    EncoderAPin=2, EncoderBPin=3, setpointRPM=30, kp_in=0.6, ki_in=0.0, kd_in=0.0
+):
+    # Setup Motor. These contants don't need to change (unless you change PWM channel)
     MOTOR_GPIO_PIN = 13  # pin 12 is channel 0, pin 13 is channel 1 (motor)
     MOTOR_FREQUENCY_HZ = 20000
     MOTOR_STARTING_DC = 10
+
+    # Initialize your motor and start it up to get the encoder reading values.
     current_DC = MOTOR_STARTING_DC
     motor = HardwarePWM(MOTOR_GPIO_PIN, MOTOR_FREQUENCY_HZ)  # PWM channel 1, 20kHz
     motor.pinpwm.set_mode(MOTOR_GPIO_PIN, pigpio.ALT0)
@@ -66,17 +32,23 @@ if __name__ == "__main__":
         MOTOR_GPIO_PIN, MOTOR_FREQUENCY_HZ, MOTOR_STARTING_DC * 10000
     )  # Pin, freq, duty cycle
 
-    # Setup Encoder
+    # Setup Encoder. With the code shown in EncoderReadRPM, the encoder count is 7600.
     ENCODER_COUNT = 7600
     MOVEMENT_THRESHOLD = 5  # Adjust this value as needed
-    ENCODER_TO_SHAFT_CONVERSION = 3.4652  # Comes from ratio of circumfrence
+    ENCODER_TO_SHAFT_CONVERSION = (
+        1.0186  # Comes from ratio of circumfrence of encoder to main tube
+    )
 
-    A_pin = 2  # GPIO Pin Number
-    B_pin = 3  # GPIO Pin Number
+    # These are typically pins 2 and 3 but can be adjusted if the PCB were to change
+    A_pin = EncoderAPin  # GPIO Pin Number
+    B_pin = EncoderBPin  # GPIO Pin Number
 
+    # GPIO setup with A and B pins for encoder
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(A_pin, GPIO.IN)
     GPIO.setup(B_pin, GPIO.IN)
+
+    # All possible outcomes for the encoder (see EncoderReadRPM.py)
     outcome = [
         0,
         1,
@@ -97,30 +69,27 @@ if __name__ == "__main__":
     ]  # Result values from above
 
     last_AB = 0b00
-    counter = 0
+    counter = 0  # Counter stores encoder counts
     prev_counter = 0
     last_time = time.time()  # Store the initial time
 
     # Set desired RPM
-    setpoint_RPM_rpm = 30
+    setpoint_RPM = setpointRPM
 
     # PID constants
-    kp = 0.05
-    ki = 0.01
-    kd = 0.1
+    kp = kp_in
+    ki = ki_in
+    kd = kd_in
 
     # Create controller
-    pid = PIDController(setpoint_RPM_rpm, kp, ki, kd)
+    pid = PIDController(setpoint_RPM, kp, ki, kd)
 
-    # Simulate motor RPM readings
     current_rpm = 0  # Initial RPM
-    time_step = 1  # Time step
-
     rpm_values = []  # List to store RPM values
 
     try:
         while True:
-            # Update Encoder
+            # Update Encoder (see EncoderReadRPM.py)
             A = GPIO.input(A_pin)  # Encoder channel A
             B = GPIO.input(B_pin)  # Encoder channel B
             current_AB = (A << 1) | B
@@ -149,18 +118,21 @@ if __name__ == "__main__":
 
             # Adjust Duty Cycle
             motor.pinpwm.hardware_PWM(
-                MOTOR_GPIO_PIN, MOTOR_FREQUENCY_HZ, current_DC * 10000
+                MOTOR_GPIO_PIN, MOTOR_FREQUENCY_HZ, int(current_DC * 10000)
             )  # Update the PWM duty cycle. Inputs: (Pin, freq, duty cycle)
 
-            rpm_values.append(current_rpm)  # Collect RPM value
+            rpm_values.append(current_rpm)  # Collect RPM value for csv output
 
     except KeyboardInterrupt:
         print("interrupt")
-        # Plot RPM values
-        # plt.plot(range(len(rpm_values)), rpm_values, label="RPM")
-        # plt.xlabel("Timestep")
-        # plt.ylabel("RPM")
-        # plt.title("Motor RPM Over Time")
-        # plt.legend()
-        # plt.grid(True)
-        # plt.show()
+        motor.end()
+        file_name = "rpm_values.csv"
+        with open(file_name, mode="w", newline="") as file:
+            writer = csv.writer(file)
+            writer.writerow(["RPM"])
+            for rpm in rpm_values:
+                writer.writerow([rpm])
+
+
+if __name__ == "__main__":
+    mainMotorLoop(setpointRPM=40, kp_in=0.6, ki_in=0.0, kd_in=0.0)
