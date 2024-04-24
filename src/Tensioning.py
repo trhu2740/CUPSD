@@ -68,6 +68,8 @@ def Tension(
             kaptonOD = (OD - ID) / 2
             approxSpoolRadius = kaptonOD * (av / maxAnalog)
             print("Approximate spool radius: ", approxSpoolRadius)
+            if approxSpoolRadius < 0.1:
+                continue
 
             # Step 3: Use approximate spool radius and desired tension to find torque
             radiusMeters = approxSpoolRadius * 0.0254  # Convert inches to meters
