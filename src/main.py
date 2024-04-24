@@ -4,11 +4,11 @@ from Tensioning import Tension
 from HardPWM import HardwarePWM
 
 #                                    A,  B, RPM, kp, ki, kd
-t1 = threading.Thread(mainMotorLoop, [2, 3, 40, 0.6, 0.0, 0.0])
+t1 = threading.Thread(target=mainMotorLoop, args=[[2, 3, 40, 0.6, 0.0, 0.0]])
 
 #                               ID, OD, N, MBP, AVC
-t2 = threading.Thread(Tension, [3, 9.5, 15, 13, 0])
-t3 = threading.Thread(Tension, [3, 9.5, 15, 15, 1])
+t2 = threading.Thread(target=Tension, args=[[3, 9.5, 15, 13, 0]])
+t3 = threading.Thread(target=Tension, args=[[3, 9.5, 15, 15, 1]])
 
 try:
     t1.start()
