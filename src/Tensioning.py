@@ -14,7 +14,13 @@ from SoftPWM import SoftwarePWM
 import numpy as np
 
 
-def Tension(innerDiameterInches, outerDiameterInches, desiredTensionN, magBrakePin):
+def Tension(
+    innerDiameterInches,
+    outerDiameterInches,
+    desiredTensionN,
+    magBrakePin,
+    followerArmChannel,
+):
     """
     The maximum case (10.75 OD) is calibrated for the follower arm potentiometer, along with a nominal
     3in spool ID.
@@ -51,7 +57,7 @@ def Tension(innerDiameterInches, outerDiameterInches, desiredTensionN, magBrakeP
         100: "656.000",
     }
     MagBrake = SoftwarePWM(magBrakePin, 50)
-    followerArm = MCP3008_AnalogRead()
+    followerArm = MCP3008_AnalogRead(bus=0, device=followerArmChannel)
 
     try:
         while True:
@@ -105,4 +111,5 @@ if __name__ == "__main__":
         outerDiameterInches=9.5,
         desiredTensionN=15,
         magBrakePin=13,
+        followerArmChannel=0,
     )
