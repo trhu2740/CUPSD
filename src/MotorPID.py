@@ -89,7 +89,9 @@ def mainMotorLoop(
 
     try:
         while True:
-            # Update Encoder (see EncoderReadRPM.py)
+            # -------------------------------------------------------------
+            #  Update Encoder (see EncoderReadRPM.py)
+            # -------------------------------------------------------------
             A = GPIO.input(A_pin)  # Encoder channel A
             B = GPIO.input(B_pin)  # Encoder channel B
             current_AB = (A << 1) | B
@@ -97,11 +99,15 @@ def mainMotorLoop(
             counter += outcome[position]
             last_AB = current_AB
 
-            # Calculate time difference - needed for RPM calculation below
+            # -------------------------------------------------------------
+            #  Calculate time difference - needed for RPM calculation below
+            # -------------------------------------------------------------
             current_time = time.time()
             time_diff = current_time - last_time
 
-            # Calculate RPM only when movement is significant
+            # -------------------------------------------------------------
+            #  Calculate RPM only when movement is significant
+            # -------------------------------------------------------------
             counterDiff = counter - prev_counter
             if abs(counterDiff) > MOVEMENT_THRESHOLD and time_diff != 0:
                 rpm = (counterDiff / ENCODER_COUNT) * (60 / time_diff)
@@ -113,10 +119,14 @@ def mainMotorLoop(
                 # No significant movement
                 continue
 
-            # Update PID controller with current RPM and get new duty cycle
+            # -------------------------------------------------------------
+            #  Update PID controller with current RPM and get new duty cycle
+            # -------------------------------------------------------------
             current_DC = pid.update(current_rpm, current_DC)
 
-            # Adjust Duty Cycle
+            # -------------------------------------------------------------
+            #  Adjust Duty Cycle
+            # -------------------------------------------------------------
             motor.pinpwm.hardware_PWM(
                 MOTOR_GPIO_PIN, MOTOR_FREQUENCY_HZ, int(current_DC * 10000)
             )  # Update the PWM duty cycle. Inputs: (Pin, freq, duty cycle)
@@ -135,4 +145,6 @@ def mainMotorLoop(
 
 
 if __name__ == "__main__":
-    mainMotorLoop(setpointRPM=40, kp_in=0.6, ki_in=0.0, kd_in=0.0)
+    mainMotorLoop(
+        EncoderAPin=2, EncoderBPin=3, setpointRPM=30, kp_in=0.6, ki_in=0.0, kd_in=0.0
+    )

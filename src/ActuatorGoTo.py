@@ -19,12 +19,12 @@ import os
 from Actuate import LinearActuate
 
 
-def MoveLinearActuator(GPIOPin=12):
+def MoveLinearActuator(GPIOPin, DC):
     actuator = LinearActuate(GPIOPin)  # Instantiate linear actuator class
     actuator.pinpwm.set_mode(GPIOPin, pigpio.ALT0)
 
     actuator.changePosition(
-        int(GPIOPin)
+        DC
     )  # Move the linear actuator to the desired position (command line input)
 
 
@@ -34,11 +34,12 @@ if __name__ == "__main__":
         arg1 = sys.argv[  # If there's a command line argument (actuator position), set arg1 to it
             1
         ]
+        arg2 = sys.argv[2]
 
     except IndexError:  # For improper use, a usage statement is printed
         print(
-            "Usage: " + os.path.basename(__file__) + " <position>"
+            "Usage: " + os.path.basename(__file__) + "<pinNumber> <position>"
         )  # Print correct usage
         sys.exit(1)  # Terminate
 
-    MoveLinearActuator(GPIOPin=arg1)
+    MoveLinearActuator(GPIOPin=arg1, DC=arg2)

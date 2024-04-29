@@ -2,32 +2,46 @@ import threading
 from MotorPID import mainMotorLoop
 from Tensioning import Tension
 from HardPWM import HardwarePWM
+from StopHardPWMAll import StopPWMHard
 
-#                                    A,  B, RPM, kp, ki, kd
-t1 = threading.Thread(target=mainMotorLoop, args=[[2, 3, 40, 0.6, 0.0, 0.0]])
 
-#                               ID, OD, N, MBP, AVC
-t2 = threading.Thread(target=Tension, args=[[3, 9.5, 15, 13, 0]])
-t3 = threading.Thread(target=Tension, args=[[3, 9.5, 15, 15, 1]])
+if __name__ == "__main__":
+    try:
+        # -------------------------------------------------------------
+        # Initialize Motor Thread
+        # -------------------------------------------------------------
+        thread_1 = threading.Thread(
+            target=mainMotorLoop,
+            #     A, B, RPM, kp, ki,  kd
+            args=(2, 3, 40, 0.6, 0.0, 0.0),
+        )
 
-try:
-    t1.start()
-    t2.start()
-    t3.start()
+        # -------------------------------------------------------------
+        # Initialize Magnetic Brake Threads
+        # -------------------------------------------------------------
+        #                                                           ID, OD, N, MBP, AVC
+        thread_2_PINK_BRAKE = threading.Thread(target=Tension, args=(3, 9.5, 15, 13, 6))
+        thread_3_RED_BRAKE = threading.Thread(target=Tension, args=(3, 9.5, 15, 15, 7))
 
-    t1.join()
-    t2.join()
-    t3.join()
-except KeyboardInterrupt:
-    print("INTERRUPT")
+        # -------------------------------------------------------------
+        # Start Threads
+        # -------------------------------------------------------------
+        thread_1.start()
+        thread_2_PINK_BRAKE.start()
+        thread_3_RED_BRAKE.start()
 
-    # Stop PWM All Channels
-    channel_0 = 12
-    channel_1 = 13
-    freqHz = 0
+        # -------------------------------------------------------------
+        # Join threads (good practice even though these are infinite loops)
+        # -------------------------------------------------------------
+        thread_1.join()
+        thread_2_PINK_BRAKE.join()
+        thread_3_RED_BRAKE.join()
 
-    pin = HardwarePWM(channel_0, freqHz)
-    pin1 = HardwarePWM(channel_1, freqHz)
+    except KeyboardInterrupt:
+        print("INTERRUPT")
+        thread_1._stop()
+        thread_2_PINK_BRAKE._stop()
+        thread_3_RED_BRAKE._stop()
 
-    pin.end()
-    pin1.end()
+        # Stop PWM All Channels
+        StopPWMHard()
