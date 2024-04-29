@@ -14,7 +14,35 @@ ssh kwiat-test:@raspberrypi.local
 (you will be prompted to enter your password here)
 ```
 
-For windows, you can use any SSH client (such as PuTTy, or the terminal).
+For windows, you can use any SSH client (such as PuTTy, or the command prompt).
+
+# Usage
+
+The entire goal of this code is to make the machine automated. Many files in CUPSD are used for testing or were used for aid in development.
+
+The only files you will need to make modifications to are in /src.
+
+The src directory holds the primary file for running the machine, called:
+
+```
+main.py
+```
+
+You can run this file by using:
+
+```
+python3 main.py
+```
+
+Main operates by using threads, to run control the drive motor, magentic brakes, and read data from the follower arms simultaneously. Most importantly, these are threads and NOT processes. This means that although these operations are never truly running concurrently, they context switch thousands of times per second. Due to time constraints, multiprocessing was never tested and I am unsure of the Pi's capability for multiprocessing.
+
+Inside of main.py you can change any constants for the drive motor or tensioning operations.
+
+I highly reccommend taking a look at Tensioning.py and MotorPID.py to understand how they work. I imagine these will be the primary two files you will want to modify when making modifications to this machine.
+
+For grabbing/sending specific values to specific hardware, please see the test directory. This directory holds some files for moving the linear actuator, reading encoder position and RPM, sweeping hardwarePWM and softwarePWM values, getting fake tension values, etc.
+
+For more understanding of threads and running software-only tests, see the threads directory.
 
 # Installation
 
