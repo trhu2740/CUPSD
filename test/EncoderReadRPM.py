@@ -17,14 +17,22 @@ Description:
 import RPi.GPIO as GPIO
 import time
 
-# Set a threshold for movement detection
+# -------------------------------------------------------------
+# Setup Encoder. With the code shown in EncoderReadRPM, the encoder count is 7600.
+# -------------------------------------------------------------
 ENCODER_COUNT = 7600
 MOVEMENT_THRESHOLD = 5  # Adjust this value as needed
 ENCODER_TO_SHAFT_CONVERSION = 1.0186  # Comes from ratio of circumfrence
 
+# -------------------------------------------------------------
+# These are typically pins 2 and 3 but can be adjusted if the PCB were to change
+# -------------------------------------------------------------
 A_pin = 2  # GPIO Pin Number
 B_pin = 3  # GPIO Pin Number
 
+# -------------------------------------------------------------
+# GPIO setup with A and B pins for encoder
+# -------------------------------------------------------------
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(A_pin, GPIO.IN)
 GPIO.setup(B_pin, GPIO.IN)
@@ -64,7 +72,9 @@ Previous A | Previous B | Current A | Current B | Result
     1           1           1           1       |     0 (do nothing)
 
 """
-
+# -------------------------------------------------------------
+# All possible outcomes for the encoder
+# -------------------------------------------------------------
 outcome = [
     0,
     1,
@@ -84,12 +94,18 @@ outcome = [
     0,
 ]  # Result values from above
 
+# -------------------------------------------------------------
+# Preparing encoder counter and start time
+# -------------------------------------------------------------
 last_AB = 0b00
 counter = 0
 prev_counter = 0
 last_time = time.time()  # Store the initial time
 
 while True:
+    # -------------------------------------------------------------
+    #  Update Encoder
+    # -------------------------------------------------------------
     A = GPIO.input(A_pin)  # Encoder channel A
     B = GPIO.input(B_pin)  # Encoder channel B
 
@@ -116,11 +132,15 @@ while True:
     counter += outcome[position]
     last_AB = current_AB
 
-    # Calculate time difference - needed for RPM calculation below
+    # -------------------------------------------------------------
+    #  Calculate time difference - needed for RPM calculation below
+    # -------------------------------------------------------------
     current_time = time.time()
     time_diff = current_time - last_time
 
-    # Calculate RPM only when movement is significant
+    # -------------------------------------------------------------
+    #  Calculate RPM only when movement is significant
+    # -------------------------------------------------------------
     counterDiff = counter - prev_counter
     if abs(counterDiff) > MOVEMENT_THRESHOLD and time_diff != 0:
         rpm = (counterDiff / ENCODER_COUNT) * (60 / time_diff)

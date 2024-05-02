@@ -15,9 +15,15 @@ Description:
 
 import RPi.GPIO as GPIO
 
+# -------------------------------------------------------------
+# These are typically pins 2 and 3 but can be adjusted if the PCB were to change
+# -------------------------------------------------------------
 A_pin = 2  # GPIO pin number
 B_pin = 3  # GPIO pin number
 
+# -------------------------------------------------------------
+# GPIO setup with A and B pins for encoder
+# -------------------------------------------------------------
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(A_pin, GPIO.IN)
 GPIO.setup(B_pin, GPIO.IN)
@@ -57,11 +63,21 @@ Previous A | Previous B | Current A | Current B | Result
     1           1           1           1       |     0 (do nothing)
     
 """
+# -------------------------------------------------------------
+# All possible outcomes for the encoder
+# -------------------------------------------------------------
 outcome = [0, 1, -1, 0, -1, 0, 0, 1, 1, 0, 0, -1, 0, -1, 1, 0]
+
+# -------------------------------------------------------------
+# Preparing encoder counter
+# -------------------------------------------------------------
 last_AB = 0b00
 counter = 0
 
 while True:
+    # -------------------------------------------------------------
+    #  Update Encoder
+    # -------------------------------------------------------------
     A = GPIO.input(A_pin)
     B = GPIO.input(B_pin)
 

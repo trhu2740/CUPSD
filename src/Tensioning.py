@@ -22,8 +22,9 @@ def Tension(
     followerArmChannel,
 ):
     """
-    The maximum case (10.75 OD) is calibrated for the follower arm potentiometer, along with a nominal
-    3in spool ID.
+    OD_CALIBRATION: Must be the value that the potentiometer is calibrated to the max spool diameter.
+    IF THE POTENTIOMETER IS NOT CALIBRATED SO THAT THE MAXIMUM VOLTAGE = MAX SPOOL DIAMETER:
+        Adjust the maxAnalog accordingly
 
     @param innerDiameterInches: Inner diameter of Kapton spool in inches (nominal 3)
     @param outerDiameterInches: Outer diameter of Kapton spool in inches
@@ -31,7 +32,9 @@ def Tension(
     @param magBrakePin: Magnetic Brake pin (NOT GPIO) (pin 13 or 15)
     """
     ID = innerDiameterInches  # inches
-    OD = outerDiameterInches  # inches
+    OD_CALIBRATION = (
+        outerDiameterInches  # inches (MUST be what the follower arm is calibrated to)
+    )
     maxAnalog = 1023
     lowerCurve = {
         0: "7.00",
@@ -69,7 +72,7 @@ def Tension(
             # -------------------------------------------------------------
             # Step 2: Get approximate spool radius
             # -------------------------------------------------------------
-            kaptonOD = (OD - ID) / 2
+            kaptonOD = (OD_CALIBRATION - ID) / 2
             approxSpoolRadius = kaptonOD * (av / maxAnalog)
             print("Approximate spool radius: ", approxSpoolRadius)
             if approxSpoolRadius < 0.1:

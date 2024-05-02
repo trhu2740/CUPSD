@@ -27,28 +27,38 @@ def MotorSimulation(
     while True:
         setpoint_rpm = setpointRPM
 
+        # -------------------------------------------------------------
         # PID constants
+        # -------------------------------------------------------------
         kp = kp_in
         ki = ki_in
         kd = kd_in
 
+        # -------------------------------------------------------------
         # Create controller
+        # -------------------------------------------------------------
         pid = PIDController(setpoint_rpm, kp, ki, kd)
 
+        # -------------------------------------------------------------
         # Simulate motor RPM readings
+        # -------------------------------------------------------------
         current_rpm = 0  # Initial RPM
         time_step = 1  # Time step
 
+        # -------------------------------------------------------------
+        #  rpm values array for logging
+        # -------------------------------------------------------------
         rpm_values = []  # List to store RPM values
 
-        # Update PID controller with current RPM and get control signal
+        # -------------------------------------------------------------
+        #  Update PID controller with current RPM and get control signal
+        # -------------------------------------------------------------
         control_signal = pid.update(current_rpm)
 
-        # Simulate motor response to control signal (adjust RPM)
-        # print("Control signal from PID update: ", control_signal)
+        # -------------------------------------------------------------
+        #  Simulate motor response to control signal (adjust RPM)
+        # -------------------------------------------------------------
         current_rpm += control_signal
-        # print("current rpm: ", round(current_rpm * 1, 0))
-
         rpm_values.append(current_rpm)  # Collect RPM value
 
         file_name = "rpm_values.csv"

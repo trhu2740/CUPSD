@@ -43,5 +43,7 @@ if __name__ == "__main__":
         thread_2_PINK_BRAKE._stop()
         thread_3_RED_BRAKE._stop()
 
+        # -------------------------------------------------------------
         # Stop PWM All Channels
+        # -------------------------------------------------------------
         StopPWMHard()

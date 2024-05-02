@@ -18,13 +18,26 @@ import sys
 sys.path.append("/home/kwiat-test/Desktop/CUPSD/src/")
 from HardPWM import HardwarePWM
 
-pinNum = 12  # Set the pin number on the raspberry pi for the linear actuator connection
-freqHz = 1000  # Set the frequency in Hz for the hardware PWM frequency
-pin = HardwarePWM(pinNum, freqHz)  # Instantiate HardwarePWM class to variable 'pin'
+# -------------------------------------------------------------
+# Set the pin number on the raspberry pi for the linear actuator connection
+# -------------------------------------------------------------
+pinNum = 12
+
+# -------------------------------------------------------------
+# Set the frequency in Hz for the hardware PWM frequency
+# -------------------------------------------------------------
+freqHz = 1000
+
+# -------------------------------------------------------------
+# Instantiate HardwarePWM class to variable 'pinNum'
+# -------------------------------------------------------------
+pin = HardwarePWM(pinNum, freqHz)
 pin.pinpwm.set_mode(pinNum, pigpio.ALT0)
 
-dc = 90  # inverse - a dc of 70 will correspond to an actual duty cycle of 30% on the oscilloscope
-# Note: a dc of 90 will mean the actuator is 90% extended
+# -------------------------------------------------------------
+# Example: a dc of 50 will mean the actuator is 50% extended
+# -------------------------------------------------------------
+dc = 50
 
 pin.pinpwm.hardware_PWM(
     pinNum, freqHz, dc * 10000

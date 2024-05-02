@@ -58,10 +58,14 @@ class PIDController:
             + (self.kd * normalized_derivative)
         )
 
+        # -------------------------------------------------------------
         # Duty cycle is in the range of 0 to 100 (percentage)
+        # -------------------------------------------------------------
         new_duty_cycle = current_duty_cycle + output
 
+        # -------------------------------------------------------------
         # Ensure the duty cycle remains within the valid range (0 to 100)
+        # -------------------------------------------------------------
         new_duty_cycle = max(0, min(100, new_duty_cycle))
 
         self.prev_error = error
