@@ -1,3 +1,14 @@
+"""
+Troy Husted
+May 29, 2024
+----------------
+Description:
+    A separate software-only motor PID simulator for thread testing.
+
+    Example use:
+        python3 motorPIDSoftware.py
+"""
+
 import csv
 
 

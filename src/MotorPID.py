@@ -3,9 +3,23 @@ Troy Husted
 April 23, 2024
 ----------------
 Description:
-    
+    (This may need future work in tandem with MotorPIDClass.py)
+
+    This file contains the main motor PID loop. 
+    Important: This machine operates in discrete time. 
+        Thus, the integral and derivative terms are not using any forward, backward, trapezoidal, etc, euler.
+
+    Because this is not a real PID controller, I left it modular. My personal lack of knowledge about PID and 
+    its discrete implementation left us little time to truly get this working at its best. So, to make any changes,
+    all you have to do is alter the "MotorPIDClass.py" file.
+
+    See https://www.scilab.org/discrete-time-pid-controller-implementation
 
     Example use:
+        python3 MotorPID.py
+
+        adjust constants within the function call in "if __name__ == "__main__":" if running by itself
+        
 """
 
 import RPi.GPIO as GPIO

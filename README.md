@@ -20,7 +20,9 @@ For windows, you can use any SSH client (such as PuTTy, or the command prompt).
 
 The entire goal of this code is to make the machine automated. Many files in CUPSD are used for testing or were used for aid in development.
 
-The only files you will need to make modifications to are in /src.
+This code will not run on anything other than a raspberry pi.
+
+The only files you will 'need' to make modifications to are in /src. With that said, feel free to modify anything, anywhere as you feel neccecary.
 
 The src directory holds the primary file for running the machine, called:
 

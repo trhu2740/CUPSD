@@ -7,8 +7,7 @@ Description:
     Change the variable 'dc' to something between 0 -> 100.
 
     Example use:
-    python3 HardPWMOneValue.py
-
+        python3 HardPWMOneValue.py
 """
 
 import pigpio

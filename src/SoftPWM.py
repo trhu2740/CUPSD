@@ -9,6 +9,8 @@ Description:
         from the CPU clock. You will experience more stutter with higher frequencies. 
         Frequencies >5Khz are not reccommended for software PWM.
 
+        For the magnetic brakes themselves, I found they work well at 100hz.
+
     Example use:
         from ... import SoftwarePWM (include your relative path in ...)
         pin40 = SoftwarePWM(40, 50)

@@ -6,7 +6,11 @@ Description:
     This file contains the function to continuously update the magnetic brake torque to match the 
     required kapton tension.
 
+    The one thing you may want to adjust is having to input a calibration OD every time you call 
+    this function. Everything should be fairly straightforward.
+
     Example use:
+        python3 Tensioning.py
 """
 
 from AnalogRead import MCP3008_AnalogRead

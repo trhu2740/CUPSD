@@ -1,6 +1,17 @@
+"""
+Troy Husted
+May 29, 2024
+----------------
+Description:
+    This is a software-only testing file for simulating the magnetic brakes with motor PID.
+
+    Example use:
+        python3 mainSoftware.py
+"""
+
 import threading
-from motorPIDSoftware import MotorSimulation
-from tensioningSoftware import TensionValueGrabSoftware
+from MotorPIDSoftware import MotorSimulation
+from TensioningSoftware import TensionValueGrabSoftware
 
 
 if __name__ == "__main__":

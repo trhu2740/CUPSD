@@ -10,7 +10,7 @@ Description:
     Any GPIO input pins can be used for the encoder.
 
     Example use:
-    python3 EncoderReadPosition.py
+        python3 EncoderReadPosition.py
 """
 
 import RPi.GPIO as GPIO

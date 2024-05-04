@@ -1,3 +1,16 @@
+"""
+Troy Husted
+May 29, 2024
+----------------
+Description:
+    This file contains the main usage to run the automated insulation wrapping machine.
+    Changing the constants are super easy, and they are defined as per the functions themselves.
+    Comments are provided above the constants to define what they are (reference only).
+
+    Example use:
+        python3 main.py
+"""
+
 import threading
 from MotorPID import mainMotorLoop
 from Tensioning import Tension

@@ -1,3 +1,14 @@
+"""
+Troy Husted
+May 29, 2024
+----------------
+Description:
+    A simple example to demonstrate how to create threads
+
+    Example use:
+        python3 MultiThreadExample.py
+"""
+
 import threading
 
 

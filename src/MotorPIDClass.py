@@ -3,14 +3,20 @@ Troy Husted
 April 23, 2024
 ----------------
 Description:
+    (This will need future work - see MotorPID.py)
+
     This class controls the PID for the 300W drivetrain motor. It is very important to note that
     any PID for this machine is in discrete time, and thus it is not very possible for us to use
     a real PID loop / controller. Since this code is modular, you can easily replace this whole 
-    class with new code if you would like. Initializing this controller is super simple.
+    class with new code if you would like (which I actually recommend). 
+    Initializing this controller is super simple.
 
     This is designed to update the duty cycle that is sent to the motor. So, the primary input
     to this controller is the measured RPM from the quadrature encoder, and the primary output
     is the updated duty cycle. 
+
+    I tried to keep this class very modular and simple to modify - so it shouldn't be too bad trying
+    different things.
 
     Example use:
         # Initialize the controller

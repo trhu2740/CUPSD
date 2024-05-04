@@ -8,7 +8,7 @@ Description:
     100 --> 0
 
     Example use:
-    python3 SoftPWMSweep.py
+        python3 SoftPWMSweep.py
 """
 
 import RPi.GPIO as GPIO

@@ -1,3 +1,14 @@
+"""
+Troy Husted
+May 29, 2024
+----------------
+Description:
+    A separate software-only file for simulation magnetic brake tension for thread simulation.
+
+    Example use:
+        python3 tensioningSoftware.py
+"""
+
 import numpy as np
 import csv
 

@@ -9,6 +9,12 @@ Description:
     be read on the oscilloscope.
 
     The hardware PWM signal will continue after running. Uncomment line 30 to stop the signal.
+
+    This code does not use a command line argument for the duty cycle.
+    The variable 'dc' must be changed.
+
+    Example Use:
+        python3 ActuatorGoTo.py
 """
 
 import pigpio

@@ -27,6 +27,8 @@ Description:
 
     Step 5: Interpolate from the two values found in Step 4 to get the closest duty cycle
     
+    Example Use:
+        python3 TensioningValueGrabSoftware.py
 """
 
 import numpy as np
@@ -68,25 +70,33 @@ def TensionValueGrabSoftware(
         100: "656.000",
     }
 
+    # -------------------------------------------------------------
     # Step 1: Get analog value (av)
+    # -------------------------------------------------------------
     av = 1023
 
+    # -------------------------------------------------------------
     # Step 2: Get approximate spool radius
+    # -------------------------------------------------------------
     kaptonOD = (OD - ID) / 2
     approxSpoolRadius = kaptonOD * (av / maxAnalog)
     print("Approximate spool radius: ", approxSpoolRadius)
 
+    # -------------------------------------------------------------
     # Step 3: Use approximate spool radius and desired tension to find torque
+    # -------------------------------------------------------------
     radiusMeters = approxSpoolRadius * 0.0254  # Convert inches to meters
     torque = desiredTensionN * radiusMeters  # Nm
     torqueOzIn = torque * 141.6119  # Oz*In
     print("Torque (Oz*In): ", torqueOzIn)
 
+    # -------------------------------------------------------------
     # Step 4: Find values from dictionary lower curve values
+    # -------------------------------------------------------------
     res_key_min, res_val_min = min(
         lowerCurve.items(), key=lambda x: abs(float(torqueOzIn) - float(x[1]))
     )  # Applies lambda function to each tuple
-    tempLowerCurve = lowerCurve
+    tempLowerCurve = lowerCurve.copy()
     del tempLowerCurve[res_key_min]
     res_key_next, res_val_next = min(
         tempLowerCurve.items(), key=lambda x: abs(float(torqueOzIn) - float(x[1]))
@@ -94,7 +104,9 @@ def TensionValueGrabSoftware(
     print("Closest Value Key & Val: ", res_key_min, res_val_min)
     print("Next Closest Value Key & Val: ", res_key_next, res_val_next)
 
+    # -------------------------------------------------------------
     # Step 5: Interpolate values from lower curves
+    # -------------------------------------------------------------
     xCoords = [float(res_key_min), float(res_key_next)]
     yCoords = [float(res_val_min), float(res_val_next)]
     xCoords.sort()  # Sort ascending for interpolation

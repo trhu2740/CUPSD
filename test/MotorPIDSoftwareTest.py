@@ -3,9 +3,13 @@ Troy Husted
 April 23, 2024
 ----------------
 Description:
-    
+    This file is a raw testing file for testing the PID class.
+    No hardware needed. 
+    This is not the same PIDController class as defined in src.
+    This file was primarily used for development testing.
 
     Example use:
+        python3 MotorPIDSoftwareTest.py
 """
 
 import matplotlib.pyplot as plt
@@ -44,42 +48,63 @@ class PIDController:
 if __name__ == "__main__":
     setpoint_rpm = 60
 
+    # -------------------------------------------------------------
     # PID constants
+    # -------------------------------------------------------------
     kp = 0.3
-    ki = 0.00
-    kd = 0.00
+    ki = 0.1
+    kd = 0.05
 
-    # Create controller
+    # -------------------------------------------------------------
+    # Create software PID controller
+    # -------------------------------------------------------------
     pid = PIDController(setpoint_rpm, kp, ki, kd)
 
+    # -------------------------------------------------------------
     # Simulate motor RPM readings
+    # -------------------------------------------------------------
     current_rpm = 0  # Initial RPM
     time_step = 1  # Time step
-
     rpm_values = []  # List to store RPM values
 
-    for _ in range(200):  # Simulate for 10 iterations
+    # -------------------------------------------------------------
+    # Simulate for 10 iterations
+    # -------------------------------------------------------------
+    for _ in range(200):
+        # -------------------------------------------------------------
         # Update PID controller with current RPM and get control signal
+        # -------------------------------------------------------------
         control_signal = pid.update(current_rpm)
 
+        # -------------------------------------------------------------
         # Simulate motor response to control signal (adjust RPM)
+        # -------------------------------------------------------------
         print("Control signal from PID update: ", control_signal)
         current_rpm += control_signal
         print("current rpm: ", round(current_rpm * 10000, 0))
 
-        rpm_values.append(current_rpm)  # Collect RPM value
+        # -------------------------------------------------------------
+        # Collect RPM value
+        # -------------------------------------------------------------
+        rpm_values.append(current_rpm)
 
+    # -------------------------------------------------------------
     # Plot RPM values
-    # plt.plot(range(len(rpm_values)), rpm_values, label="RPM")
-    # plt.xlabel("Timestep")
-    # plt.ylabel("RPM")
-    # plt.title("Motor RPM Over Time")
-    # plt.legend()
-    # plt.grid(True)
-    # plt.show()
-    file_name = "rpm_values.csv"
-    with open(file_name, mode="w", newline="") as file:
-        writer = csv.writer(file)
-        writer.writerow(["RPM"])
-        for rpm in rpm_values:
-            writer.writerow([rpm])
+    # -------------------------------------------------------------
+    plt.plot(range(len(rpm_values)), rpm_values, label="RPM")
+    plt.xlabel("Timestep")
+    plt.ylabel("RPM")
+    plt.title("Motor RPM Over Time")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+    # -------------------------------------------------------------
+    # Write RPM values array to csv file for post processing
+    # -------------------------------------------------------------
+    # file_name = "rpm_values.csv"
+    # with open(file_name, mode="w", newline="") as file:
+    #     writer = csv.writer(file)
+    #     writer.writerow(["RPM"])
+    #     for rpm in rpm_values:
+    #         writer.writerow([rpm])

@@ -5,12 +5,9 @@ February 10, 2024
 Description:
     This file is used to test the software PWM output on an oscilloscope.
     Change the variable 'dc' to something between 0 -> 100.
-    You will notice that the dc is inverse to the actual duty cycle that will
-    be read on the oscilloscope.
 
     Example use:
-    python3 SoftPWMOneValue.py
-
+        python3 SoftPWMOneValue.py
 """
 
 import RPi.GPIO as GPIO
@@ -22,7 +19,7 @@ from SoftPWM import SoftwarePWM
 
 pin40 = SoftwarePWM(40, 100)
 
-dc = 10  # inverse : dc of 10 corresponds to an actual duty cycle of 90% on the scope
+dc = 10
 
 try:
     while True:

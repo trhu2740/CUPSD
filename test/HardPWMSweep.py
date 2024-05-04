@@ -6,6 +6,11 @@ Description:
     This file tests the hardware PWM output by sweeping through duty cycles
     0 --> 100
     100 --> 0
+
+    You will need to manually alter 'pinNum' and 'freqHz' accordingly. 
+
+    Example Use:
+        python3 HardPWMSweep.py
 """
 
 import pigpio
