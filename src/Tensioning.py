@@ -15,6 +15,7 @@ Description:
 
 from AnalogRead import MCP3008_AnalogRead
 from SoftPWM import SoftwarePWM
+from gpiozero import MCP3008
 import numpy as np
 
 
@@ -64,20 +65,20 @@ def Tension(
         100: "656.000",
     }
     MagBrake = SoftwarePWM(magBrakePin, 50)
-    followerArm = MCP3008_AnalogRead()
+    followerArm = MCP3008(followerArmChannel)
 
     try:
         while True:
             # -------------------------------------------------------------
             # Step 1: Get analog value (av)
             # -------------------------------------------------------------
-            av = followerArm.read(channel=followerArmChannel)
+            av = followerArm.value
 
             # -------------------------------------------------------------
             # Step 2: Get approximate spool radius
             # -------------------------------------------------------------
             kaptonOD = (OD_CALIBRATION - ID) / 2
-            approxSpoolRadius = kaptonOD * (av / maxAnalog)
+            approxSpoolRadius = kaptonOD * av
             print("Approximate spool radius: ", approxSpoolRadius)
             if approxSpoolRadius < 0.1:
                 continue

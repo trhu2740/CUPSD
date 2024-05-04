@@ -47,8 +47,11 @@ if __name__ == "__main__":
     # -------------------------------------------------------------
     except IndexError:
         print(
-            "Usage: " + os.path.basename(__file__) + "<pinNumber> <position>"
+            "Usage: " + os.path.basename(__file__) + " <pinNumber> <position>"
         )  # Print correct usage
         sys.exit(1)  # Terminate
 
-    MoveLinearActuator(GPIOPin=arg1, DC=arg2)
+    # -------------------------------------------------------------
+    # Pin 12 is the actuator
+    # -------------------------------------------------------------
+    MoveLinearActuator(GPIOPin=int(arg1), DC=int(arg2))

@@ -11,15 +11,13 @@ Description:
 """
 
 import sys
+from gpiozero import MCP3008
 
 sys.path.append("/home/kwiat-test/Desktop/CUPSD/src/")
-from AnalogRead import MCP3008_AnalogRead
-
-adc = MCP3008_AnalogRead()
-chan = 7
+adc = MCP3008(7)
 
 try:
     while True:
-        print(adc.read(channel=chan))  # if necessary perform several times
+        print(adc.value)  # if necessary perform several times
 except KeyboardInterrupt:
     print("Interrupt")
