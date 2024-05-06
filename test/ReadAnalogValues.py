@@ -20,6 +20,6 @@ adc = MCP3008_AnalogRead(0, 0, 7)
 
 try:
     while True:
-        print(adc.value)  # if necessary perform several times
+        print(adc.read())  # if necessary perform several times
 except KeyboardInterrupt:
     print("Interrupt")
