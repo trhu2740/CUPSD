@@ -33,8 +33,8 @@ if __name__ == "__main__":
         # Initialize Magnetic Brake Threads
         # -------------------------------------------------------------
         #                                                           ID, OD, N, MBP, AVC
-        thread_2_PINK_BRAKE = threading.Thread(target=Tension, args=(3, 9.5, 15, 13, 7))
-        thread_3_RED_BRAKE = threading.Thread(target=Tension, args=(3, 9.5, 15, 15, 6))
+        thread_2_PINK_BRAKE = threading.Thread(target=Tension, args=(3, 9.5, 15, 27, 7))
+        thread_3_RED_BRAKE = threading.Thread(target=Tension, args=(3, 9.5, 15, 22, 6))
 
         # -------------------------------------------------------------
         # Start Threads

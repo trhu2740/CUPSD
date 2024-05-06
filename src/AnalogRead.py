@@ -14,7 +14,7 @@ from spidev import SpiDev
 class MCP3008_AnalogRead:
     """
     This class reads analog values from the analog to digital converter. Specify a bus or device
-    when initializing if using anything other than zero.
+    when initializing (typically just 0 for both bus and device)
     """
 
     def __init__(self, bus, device, channel):

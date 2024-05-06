@@ -15,7 +15,6 @@ Description:
 
 from AnalogRead import MCP3008_AnalogRead
 from SoftPWM import SoftwarePWM
-from gpiozero import MCP3008
 import numpy as np
 
 
@@ -34,7 +33,7 @@ def Tension(
     @param innerDiameterInches: Inner diameter of Kapton spool in inches (nominal 3)
     @param outerDiameterInches: Outer diameter of Kapton spool in inches
     @param desiredTension: Tension in newtons
-    @param magBrakePin: Magnetic Brake pin (NOT GPIO) (pin 13 or 15)
+    @param magBrakePin: Magnetic Brake GPIO pin (27 or 22)
     """
     ID = innerDiameterInches  # inches
     OD_CALIBRATION = (
@@ -132,6 +131,6 @@ if __name__ == "__main__":
         innerDiameterInches=3,
         outerDiameterInches=9.5,
         desiredTensionN=15,
-        magBrakePin=13,
+        magBrakePin=27,
         followerArmChannel=6,
     )

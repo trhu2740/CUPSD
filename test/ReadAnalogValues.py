@@ -12,10 +12,11 @@ Description:
 """
 
 import sys
-from gpiozero import MCP3008
 
 sys.path.append("/home/kwiat-test/Desktop/CUPSD/src/")
-adc = MCP3008(7)
+from AnalogRead import MCP3008_AnalogRead
+
+adc = MCP3008_AnalogRead(0, 0, 7)
 
 try:
     while True:

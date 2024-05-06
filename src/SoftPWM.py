@@ -23,7 +23,7 @@ import RPi.GPIO as GPIO
 class SoftwarePWM:
     """
     This class controls software PWM
-    @param pin: Enter the pin number (NOT GPIO) on the raspberry pi
+    @param pin: Enter the GPIO number on the raspberry pi
     @param freq: Enter the frequency in hz for the PWM signal
     """
 
@@ -33,7 +33,7 @@ class SoftwarePWM:
 
     def setup(self):
         GPIO.setwarnings(False)
-        GPIO.setmode(GPIO.BOARD)
+        GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.pin, GPIO.OUT)
         self.pinpwm = GPIO.PWM(self.pin, self.freq)
         self.pinpwm.start(0)  # Start with a duty cycle of 0
