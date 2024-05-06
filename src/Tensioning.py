@@ -65,20 +65,20 @@ def Tension(
         100: "656.000",
     }
     MagBrake = SoftwarePWM(magBrakePin, 50)
-    followerArm = MCP3008(followerArmChannel)
+    followerArm = MCP3008_AnalogRead(0, 0, followerArmChannel)
 
     try:
         while True:
             # -------------------------------------------------------------
             # Step 1: Get analog value (av)
             # -------------------------------------------------------------
-            av = followerArm.value
+            av = followerArm.read()
 
             # -------------------------------------------------------------
             # Step 2: Get approximate spool radius
             # -------------------------------------------------------------
             kaptonOD = (OD_CALIBRATION - ID) / 2
-            approxSpoolRadius = kaptonOD * av
+            approxSpoolRadius = kaptonOD * (av / maxAnalog)
             print("Approximate spool radius: ", approxSpoolRadius)
             if approxSpoolRadius < 0.1:
                 continue
@@ -133,5 +133,5 @@ if __name__ == "__main__":
         outerDiameterInches=9.5,
         desiredTensionN=15,
         magBrakePin=13,
-        followerArmChannel=0,
+        followerArmChannel=6,
     )

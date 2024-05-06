@@ -4,7 +4,8 @@ May 29, 2024
 ----------------
 Description:
     This file is used to read and print the analog values from the ADC.
-    Change the channel by altering 'chan' between 0->7
+    Change the channel by altering the MCP3008 initialization number from
+    0 -> 7.
 
     Example use:
         python3 ReadAnalogValues.py
