@@ -24,6 +24,14 @@ This code will not run on anything other than a raspberry pi.
 
 The only files you will 'need' to make modifications to are in /src. With that said, feel free to modify anything, anywhere as you feel neccecary.
 
+Note, some files require a direct reference to the /src directory (primarily in the /test directory), shown here:
+
+```
+sys.path.append("/home/kwiat-test/Desktop/CUPSD/src/")
+```
+
+Please replace this path with the correct path on your machine.
+
 The src directory holds the primary file for running the machine, called:
 
 ```
@@ -138,7 +146,3 @@ hostname -I
 ```
 
 Note, you can reserve an IP for the raspberry pi in your router or request the DHCP to reserve one. Otherwise, it is not gauranteed that the Pi will have the same IP address whenever it reboots.
-
-change
-
-change

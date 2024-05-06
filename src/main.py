@@ -14,7 +14,6 @@ Description:
 import threading
 from MotorPID import mainMotorLoop
 from Tensioning import Tension
-from HardPWM import HardwarePWM
 from StopHardPWMAll import StopPWMHard
 
 
@@ -59,11 +58,11 @@ if __name__ == "__main__":
 
     except KeyboardInterrupt:
         print("INTERRUPT")
-        thread_1._stop()
-        thread_2_PINK_BRAKE._stop()
-        thread_3_RED_BRAKE._stop()
-
         # -------------------------------------------------------------
         # Stop PWM All Channels
         # -------------------------------------------------------------
         StopPWMHard()
+
+        thread_1._stop()
+        thread_2_PINK_BRAKE._stop()
+        thread_3_RED_BRAKE._stop()
