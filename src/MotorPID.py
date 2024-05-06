@@ -31,7 +31,13 @@ from MotorPIDClass import PIDController
 
 
 def mainMotorLoop(
-    EncoderAPin=2, EncoderBPin=3, setpointRPM=30, kp_in=0.6, ki_in=0.0, kd_in=0.0
+    EncoderAPin=2,
+    EncoderBPin=3,
+    setpointRPM=30,
+    kp_in=0.6,
+    ki_in=0.0,
+    kd_in=0.0,
+    debug=False,
 ):
 
     # -------------------------------------------------------------
@@ -151,7 +157,8 @@ def mainMotorLoop(
             if abs(counterDiff) > MOVEMENT_THRESHOLD and time_diff != 0:
                 rpm = (counterDiff / ENCODER_COUNT) * (60 / time_diff)
                 current_rpm = rpm
-                print("RPM: ", round(abs(rpm) * ENCODER_TO_SHAFT_CONVERSION, 2))
+                if debug == True:
+                    print("RPM: ", round(abs(rpm) * ENCODER_TO_SHAFT_CONVERSION, 2))
                 prev_counter = counter
                 last_time = current_time
             else:
@@ -191,5 +198,11 @@ def mainMotorLoop(
 
 if __name__ == "__main__":
     mainMotorLoop(
-        EncoderAPin=2, EncoderBPin=3, setpointRPM=30, kp_in=0.6, ki_in=0.0, kd_in=0.0
+        EncoderAPin=2,
+        EncoderBPin=3,
+        setpointRPM=30,
+        kp_in=0.6,
+        ki_in=0.0,
+        kd_in=0.0,
+        debug=True,
     )

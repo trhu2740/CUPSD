@@ -25,16 +25,23 @@ if __name__ == "__main__":
         # -------------------------------------------------------------
         thread_1 = threading.Thread(
             target=mainMotorLoop,
-            #     A, B, RPM, kp, ki,  kd
-            args=(2, 3, 40, 0.6, 0.0, 0.0),
+            #     A, B, RPM, kp, ki,  kd, debug
+            args=(2, 3, 40, 0.6, 0.0, 0.0, False),
         )
 
         # -------------------------------------------------------------
         # Initialize Magnetic Brake Threads
         # -------------------------------------------------------------
-        #                                                           ID, OD, N, MBP, AVC
-        thread_2_PINK_BRAKE = threading.Thread(target=Tension, args=(3, 9.5, 15, 27, 7))
-        thread_3_RED_BRAKE = threading.Thread(target=Tension, args=(3, 9.5, 15, 22, 6))
+        thread_2_PINK_BRAKE = threading.Thread(
+            target=Tension,
+            #     ID, OD, N, MBP, AVC, debug
+            args=(3, 9.5, 15, 27, 7, False),
+        )
+        thread_3_RED_BRAKE = threading.Thread(
+            target=Tension,
+            #     ID, OD, N, MBP, AVC, debug
+            args=(3, 9.5, 15, 22, 6, False),
+        )
 
         # -------------------------------------------------------------
         # Start Threads

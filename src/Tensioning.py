@@ -24,6 +24,7 @@ def Tension(
     desiredTensionN,
     magBrakePin,
     followerArmChannel,
+    debug,
 ):
     """
     OD_CALIBRATION: Must be the value that the potentiometer is calibrated to the max spool diameter.
@@ -78,7 +79,8 @@ def Tension(
             # -------------------------------------------------------------
             kaptonOD = (OD_CALIBRATION - ID) / 2
             approxSpoolRadius = kaptonOD * (av / maxAnalog)
-            print("Approximate spool radius: ", approxSpoolRadius)
+            if debug == True:
+                print("Approximate spool radius: ", approxSpoolRadius)
             if approxSpoolRadius < 0.1:
                 continue
 
@@ -113,7 +115,8 @@ def Tension(
             xCoords.sort()  # Sort ascending for interpolation
             yCoords.sort()
             finalDutyCycle = np.interp(float(torqueOzIn), yCoords, xCoords)
-            print("Final duty cycle: ", round(finalDutyCycle, 2))
+            if debug == True:
+                print("Final duty cycle: ", round(finalDutyCycle, 2))
 
             # -------------------------------------------------------------
             # Step 6: Update brake duty cycle
@@ -133,4 +136,5 @@ if __name__ == "__main__":
         desiredTensionN=15,
         magBrakePin=27,
         followerArmChannel=6,
+        debug=True,
     )
